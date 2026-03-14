@@ -31,14 +31,13 @@ void Queue::Push(int value)
 
 void Queue::Pop()
 {
-    if (head == nullptr) 
+    if (Empty()) 
     {
-        std::cout << "\n Pop error:  Queue is empty\n";
+        std::cout << "\nPop error:  Queue is empty\n";
         return;
     }
     
     Node* temp = head;
-    std::cout << "Popping: " << temp->data << "\n";
     if(head->next == nullptr)
     {
         tail = nullptr;
@@ -64,7 +63,7 @@ void Queue::Display()
 {
     if (Empty()) 
     {
-        std::cout << "\n Display error:  Queue is empty\n";
+        std::cout << "\nDisplay error:  Queue is empty\n";
         return;
     }
 
@@ -82,17 +81,21 @@ int main()
     Queue queue;
     int maxSize = 50;
 
+    queue.Display();
+    std::cout << "Size:" << queue.Size() << std::endl;
+    std::cout << "Add 50 elements:\n";
     for(int i=0; i<maxSize; i++)
     {
         queue.Push(i);
     }
     queue.Display();
-    std::cout << "Size:" << queue.Size() << std::endl;
+    std::cout << "\nSize:" << queue.Size() << std::endl;
 
+    std::cout << "Pop 51 elements:\n";
     for(int i=0; i<maxSize+1; i++)
     {
-        queue.Pop();
         queue.Display();
+        queue.Pop();
     }
     std::cout << "Size:" << queue.Size() << std::endl;
 }

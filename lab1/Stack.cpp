@@ -27,7 +27,7 @@ void Stack::Push(int value)
 
 void Stack::Pop() 
 {
-    if(top == nullptr) 
+    if(Empty()) 
     {
         std::cout << "\nStack is empty";
         return;
@@ -51,9 +51,9 @@ bool Stack::Empty()
 
 void Stack::Display() 
 {
-    if(top == nullptr) 
+    if(Empty()) 
     {
-        std::cout << "\n Display stack:  Stack is empty\n";
+        std::cout << "\nDisplay stack:  Stack is empty\n";
         return;
     }
 
@@ -69,22 +69,25 @@ void Stack::Display()
 int main() 
 {
     Stack stack;
+    int maxSize = 50;
 
     stack.Display();
+    std::cout << "Size:" << stack.Size() << std::endl;
 
     std::cout << "Add 50 elements:\n";
-    for(int i=0; i<50; i++)
+    for(int i=0; i<maxSize; i++)
     {
         stack.Push(i);
     }
-
     stack.Display();
+    std::cout << "\nSize:" << stack.Size() << std::endl;
 
     std::cout << "Pop 51 element:\n";
-    for(int i=0; i<51; i++)
+    for(int i=0; i<maxSize+1; i++)
     {
         stack.Display();
         stack.Pop();
     }
-}
 
+    std::cout << "\nSize:" << stack.Size() << std::endl;
+}

@@ -7,14 +7,7 @@ std::mt19937 gen(time(nullptr));
 std::uniform_int_distribution<> randDistribution(0, 100000);
 std::uniform_int_distribution<> tableDistribution(0, 9999);
 
-int getRandomTarget();
-int getRandomFromTable();
-int searchCostSum(int& sum, int cost);
-
-CircularList::CircularList()
-{
-
-}
+CircularList::CircularList() {}
 CircularList::~CircularList()
 {
     if (cursor == nullptr) 
@@ -26,7 +19,6 @@ CircularList::~CircularList()
 
     cursor->next = nullptr; 
 
-    // 4. Klasyczna pętla usuwająca dla list jednokierunkowych
     while (current != nullptr)
     {
         Node* nodeToDelete = current;
@@ -72,8 +64,9 @@ void CircularList::merge(CircularList& list2)
     {
         cursor = list2.cursor;
         currentSize = list2.currentSize;
-        // list2.cursor = nullptr;
-        // list2.currentSize = 0;
+        
+        list2.cursor = nullptr; //wyzerowania
+        list2.currentSize = 0;
         return;
     }
     if(list2.cursor == nullptr)
@@ -100,18 +93,7 @@ void CircularList::merge(CircularList& list2)
     // ^          |         ^    | 
     // |__________|         |____|
 
-int getRandomTarget()
-{
-    int target = randDistribution(gen); //losowa liczba z przedziału (0,100000)
-    //std::cout << target << std::endl;
-    return target;
-}
 
-int getRandomFromTable()
-{
-    int target = tableDistribution(gen); //losowa liczba z przedziału Tablicy T
-    return target;
-}
 
 int CircularList::searchCost(int target)
 {
@@ -164,7 +146,7 @@ int main()
 
     for(int i=0; i<=9999; i++)
     {   
-        int randNumber = randDistribution(gen);
+        int randNumber = randDistribution(gen);  //losowa liczba z przedziału (0,100000)
         T[i] = randNumber;
     }
     for(int i=0; i<=9999; i++)
@@ -174,12 +156,12 @@ int main()
     
     for(int i=0; i<1000; i++)
     {
-        int index = getRandomFromTable();
+        int index = tableDistribution(gen); //losowa liczba z przedziału Tablicy T
         sumTable += L.searchCost(T[index]);
     }
     for(int i=0; i<1000; i++)
     {
-        sumRand += L.searchCost(getRandomTarget());
+        sumRand += L.searchCost(randDistribution(gen));
     }
     average1 = sumRand/1000.0f;
     average2 = sumTable/1000.0f;

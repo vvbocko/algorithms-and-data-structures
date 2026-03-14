@@ -14,7 +14,7 @@ class Stack
 {
 private:
     Node* top = nullptr;
-    int currentSize;
+    int currentSize = 0;
 
 public:
     Stack();

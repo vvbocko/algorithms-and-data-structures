@@ -19,8 +19,8 @@ void Stack::Push(int value)
 {
     Node* newNode = new Node(value);
 
-    newNode->next = top;    // next nowego noda wskazuje tam gdzie wskaznik top
-    top = newNode;          // wskaznik top wskazuje na newNode
+    newNode->next = top;
+    top = newNode;
 
     currentSize++;
 }

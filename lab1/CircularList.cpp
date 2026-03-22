@@ -16,7 +16,6 @@ CircularList::~CircularList()
     }
 
     Node* current = cursor->next; 
-
     cursor->next = nullptr; 
 
     while (current != nullptr)
@@ -51,7 +50,7 @@ void CircularList::insert(int value)
     }
     else
     {
-        newNode->next = cursor->next; //zadzaiła ze wzgledu na kolejnośc - tutaj jeszcze cursor->next wskazuje sam na siebie
+        newNode->next = cursor->next;
         cursor->next = newNode;
         cursor = newNode;
     }
@@ -75,9 +74,9 @@ void CircularList::merge(CircularList& list2)
     }
 
     Node* list1Begining = cursor->next; //1
-    Node* list12Begining = list2.cursor->next; //4
+    Node* list2Begining = list2.cursor->next; //4
 
-    cursor->next = list12Begining;
+    cursor->next = list2Begining;
     list2.cursor->next = list1Begining;
 
     currentSize += list2.currentSize;

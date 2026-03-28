@@ -21,7 +21,7 @@ void swapKeys(int& a, int& b)
 
 void printArray(const std::vector<int>& v) 
 {
-    for (int i = 0; i < v.size(); i++) 
+    for (size_t i = 0; i < v.size(); i++) 
     {
         if (v[i] < 10) { std::cout << "0"; }
         std::cout << v[i] << " ";
@@ -31,7 +31,7 @@ void printArray(const std::vector<int>& v)
 
 void InsertionSort(std::vector<int>& v) 
 {
-    for(int i=1; i<v.size(); i++)
+    for(size_t i=1; i<v.size(); i++)
     {
         int j = i;
         while (j > 0 && isGreater(v[j-1], v[j])) 

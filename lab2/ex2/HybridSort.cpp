@@ -25,16 +25,6 @@ void swapKeys(int& a, int& b)
     std::swap(a, b);
 }
 
-void printArray(const std::vector<int>& v) 
-{
-    for (size_t i = 0; i < v.size(); i++) 
-    {
-        if (v[i] < 10) { std::cout << "0"; }
-        std::cout << v[i] << " ";
-    }
-    std::cout << "\n";
-}
-
 int HoarePartition(std::vector<int> &v, int low, int high)
 {
     int pivot = v[(low + (high - low)/2)];
@@ -70,11 +60,6 @@ void InsertionSort(std::vector<int>& v, int low, int high)
             swapKeys(v[j-1], v[j]);
             j--;
         }
-
-        if(v.size() < 40)
-        {
-            printArray(v);
-        }
     }
 }
 
@@ -89,11 +74,6 @@ void HybridSort(std::vector<int>& v, int low, int high, int n)
         else
         {
             int partitionIndex = HoarePartition(v, low, high);
-            
-            if(n < 40) 
-            {
-                printArray(v);
-            }
 
             HybridSort(v, low, partitionIndex, n);
             HybridSort(v, partitionIndex + 1, high, n);
@@ -118,31 +98,12 @@ int main(int argc, char* argv[])
         std::cin >> v[i];
         original_v[i] = v[i];
     }
-
-    if(n < 40)
-    {
-        printArray(original_v);
-    }
     
     HybridSort(v, 0, n - 1, n);
 
-    if(n < 40)
-    {
-        printArray(original_v);
-        std::cout << "0\n";
-        printArray(v);
-    }
-
-    // Dla dowolnego rozmiaru danych, na końcu:
-
-    // - ○ łączną liczbę porównań między kluczami,
     std::cout << compareCount <<"\n";
-    // - ○ łączną liczbę przestawień kluczy.
     std::cout << swapCount << "\n";
 
-    // - (Zaimplementować osobne funkcje/procedury do porównywania i przestawiania kluczy, które dodatkowo zwiększają swój globalny licznik odpowiednio porównań lub przestawień.)
-    //jest
-    // - Finalnie, program sam sprawdza, czy wynikowy ciąg jest posortowanym ciągiem wejściowym.
     bool isSorted = true;
     for(int i=1; i<n; i++)
     {
@@ -152,8 +113,7 @@ int main(int argc, char* argv[])
             break;
         }
     }
-    if(isSorted) {std::cout << "Posortowano poprawnie.\n";}
-    else {std::cerr << "Blad sortowania!\n";}
+    if(!isSorted) {std::cerr << "Blad sortowania!\n";}
     
     return 0;
 }

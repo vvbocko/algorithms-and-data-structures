@@ -19,37 +19,19 @@ void swapKeys(int& a, int& b)
     std::swap(a, b);
 }
 
-int main() 
+void printArray(const std::vector<int>& v) 
 {
-    int n;
-    std::cin >> n;
-    std::vector<int> v(n);
-    std::vector<int> original_v(n);
-
-    
-    for(int i = 0; i < n; i++)
-    {   
-        std::cin >> v[i];
-    }
-
-    for(int i = 0; i < n; i++)
-    {   
-        original_v[i] = v[i];
-    }
-
-    if(n < 40)
+    for (int i = 0; i < v.size(); i++) 
     {
-        // - tablica wejsciowa
-        for(int i=0; i<n; i++)
-        {
-            if(v[i]<10) { std::cout <<"0"; }
-            std::cout << original_v[i] <<" ";
-        }
-        std::cout << "\n";
-        // - stany sortowanej tablicy w istotnych momentach (np. w MERGE SORT - po zakończeniu każdego scalania),
+        if (v[i] < 10) { std::cout << "0"; }
+        std::cout << v[i] << " ";
     }
-    
-    for(int i=1; i<n; i++)
+    std::cout << "\n";
+}
+
+void InsertionSort(std::vector<int>& v) 
+{
+    for(int i=1; i<v.size(); i++)
     {
         int j = i;
         while (j > 0 && isGreater(v[j-1], v[j])) 
@@ -58,35 +40,43 @@ int main()
             j--;
         }
 
-        if(n < 40)
+        if(v.size() < 40)
         {
-            for(int i=0; i<n; i++)
-            {
-                if(v[i]<10) { std::cout <<"0"; }
-                std::cout << v[i] <<" ";
-            }
-            std::cout << "\n";
+            printArray(v);
         }
+    }
+}
+
+int main() 
+{
+    int n;
+    std::cin >> n;
+    std::vector<int> v(n);
+    std::vector<int> original_v(n);
+
+    for(int i = 0; i < n; i++)
+    {   
+        std::cin >> v[i];
+        original_v[i] = v[i];
     }
 
     if(n < 40)
     {
+        printArray(original_v);
+        // - tablica wejsciowa
+        // - stany sortowanej tablicy w istotnych momentach (np. w MERGE SORT - po zakończeniu każdego scalania),
+    }
+    
+    InsertionSort(v);
+
+    if(n < 40)
+    {
         // - tablicę wejściową (ponownie dla porównania!),
-        for(int i=0; i<n; i++)
-        {
-            if(original_v[i]<10) { std::cout <<"0"; }
-            std::cout << original_v[i] <<" ";
-        }
-        std::cout << "\n";
+        printArray(original_v);
         std::cout << "0\n";
         // - tablicę po sortowaniu.
-        for(int i=0; i<n; i++)
-        {
-            if(v[i]<10) { std::cout <<"0"; }
-            std::cout << v[i] <<" ";
-        }
+        printArray(v);
         //Dla czytelności drukujmy klucze jako liczby dwucyfrowe.
-        std::cout << "\n";
     }
 
     // Dla dowolnego rozmiaru danych, na końcu:
@@ -99,13 +89,17 @@ int main()
     // - (Zaimplementować osobne funkcje/procedury do porównywania i przestawiania kluczy, które dodatkowo zwiększają swój globalny licznik odpowiednio porównań lub przestawień.)
     //jest
     // - Finalnie, program sam sprawdza, czy wynikowy ciąg jest posortowanym ciągiem wejściowym.
+    bool isSorted = true;
     for(int i=1; i<n; i++)
     {
         if(v[i-1] > v[i])
         {
-            std::cout << "Dane nie są posortowane. \n";
+            isSorted = false;
+            break;
         }
     }
-    std::cout << "\n";
+    if(isSorted) {std::cout << "Posortowano poprawnie.\n";}
+    else {std::cerr << "Blad sortowania!\n";}
+    
     return 0;
 }

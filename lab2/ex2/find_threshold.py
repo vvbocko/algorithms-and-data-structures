@@ -1,11 +1,11 @@
 import subprocess
 
 n = "10000"
-k = 10  # Liczba powtórzeń dla uśrednienia wyników
+k = 10
 best_threshold = 0
 min_operations = float('inf')
 
-print(f"Szukam najlepszego progu (threshold) dla Hybrydy (n={n}, k={k})...")
+print(f"najlepszy próg dla Hybrydowego (n={n}, k={k})")
 print("-" * 100)
 
 for t in range(2, 51):
@@ -13,8 +13,8 @@ for t in range(2, 51):
     sum_swaps = 0
     
     for _ in range(k):
-        data = subprocess.check_output(['./gen_rand', n], text=True)
-        hyb = subprocess.run(['./hybrid', str(t)], input=data, capture_output=True, text=True)
+        data = subprocess.check_output(['../ex1/generators/rand.exe', str(n)], text=True)
+        hyb = subprocess.run(['../ex1/hybrid.exe', str(t)], input=data, capture_output=True, text=True)
         
         lines = hyb.stdout.strip().split('\n')
         sum_comparisons += int(lines[-2])
@@ -31,4 +31,4 @@ for t in range(2, 51):
         best_threshold = t
 
 print("-" * 100)
-print(f"Najmniejszą sumę operacji uzyskał próg: {best_threshold}")
+print(f"Najmniejszą sumę operacji ma próg: {best_threshold}")

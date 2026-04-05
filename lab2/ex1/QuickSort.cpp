@@ -122,7 +122,7 @@ int main()
             break;
         }
     }
-    if(isSorted) {std::cout << "Posortowano poprawnie.\n";}
+    if(isSorted) {std::cerr << "Posortowano poprawnie.\n";}
     else {std::cerr << "Blad sortowania!\n";}
     
     return 0;

@@ -37,7 +37,7 @@ bool BinarySearchMatrix(const std::vector<std::vector<int>>& matrix, int target)
     int rows = matrix.size();
     int columns = matrix[0].size();
 
-    if(rows > columns) //wysoka
+    if(rows > columns) //wysokosc
     {
         for (int i = 0; i < columns; i++) 
         {
@@ -64,7 +64,7 @@ bool BinarySearchMatrix(const std::vector<std::vector<int>>& matrix, int target)
             }
         }
     }
-    else //szeroka
+    else //szerokosc
     {
         for(int i = 0; i < rows; i++)
         {
@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    int target = -1; // wymusza najgorszy przypadek
+    int target = -1; //najgorszy przypadek
 
     SaddlebackSearch(matrix, target);
     BinarySearchMatrix(matrix, target);

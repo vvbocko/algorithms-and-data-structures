@@ -78,20 +78,20 @@ void MergeRuns(std::vector<int>& v, std::vector<int>& temp, const std::vector<st
     int right = runs[run_right].second;
     
     Merge(v, temp, left, mid, right);
-    // if (v.size() < 40) printArray(v);
+    if (v.size() < 40) printArray(v);
 }
 
 void NaturalMergeSort(std::vector<int>& v, std::vector<int>& temp, int n) // dziel i zwyciężaj + Merge() + podział na runs - wzrastające
 {
     std::vector<std::pair<int, int>> runs;
-    // znaleźć rosnące 
+
     int start = 0;
 
     for (int i=0; i<n-1; i++)
     {
         if (!isLessOrEqual(v[i], v[i+1]))
         {
-            runs.push_back({start, i}); // wektor początku i końca posortowanego już ciagu
+            runs.push_back({start, i});
             start = i + 1;
         }
     }
@@ -118,16 +118,16 @@ int main()
         original_v[i] = v[i];
     }
 
-    // if(n < 40) printArray(original_v);
+    if(n < 40) printArray(original_v);
     
     NaturalMergeSort(v, temp, n);
 
-    // if(n < 40)
-    // {
-    //     printArray(original_v);
-    //     std::cout << "0\n";
-    //     printArray(v);
-    // }
+    if(n < 40)
+    {
+        printArray(original_v);
+        std::cout << "0\n";
+        printArray(v);
+    }
 
     std::cout << compareCount << "\n";
     std::cout << swapCount << "\n";
@@ -141,6 +141,7 @@ int main()
             break;
         }
     }
-    if(!isSorted) {std::cerr << "\n";}
+    if(isSorted) {std::cerr << "Posortowano poprawnie\n";}
+    else {std::cerr << "Blad sortowania\n";}
     return 0;
 }

@@ -1,10 +1,7 @@
 #include <iostream>
 #include <string>
 #include <random>
-#include <ctime>
-
-std::mt19937 gen(time(nullptr));
-
+#include <chrono>
 
 int main(int argc, char* argv[]) 
 {
@@ -16,6 +13,9 @@ int main(int argc, char* argv[])
 
     int n = std::stoi(argv[1]);
     
+    unsigned seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    std::mt19937 gen(seed);
+
     std::uniform_int_distribution<> randDistribution(0, 2*n-1);
     std::cout << n << "\n";
 

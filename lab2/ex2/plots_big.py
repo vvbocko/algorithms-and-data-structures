@@ -2,7 +2,7 @@ import subprocess
 import matplotlib.pyplot as plt
 
 K_REPEATS = 100
-THRESHOLD = "7"
+THRESHOLD = "8"
 N_VALUES = list(range(1000, 50001, 1000))
 
 results = {
@@ -19,14 +19,14 @@ for n in N_VALUES:
     sum_s = {"Quick": 0, "Hybrid": 0}
     
     for _ in range(K_REPEATS):
-        data = subprocess.check_output(['./gen_rand', str_n,], text=True)
+        data = subprocess.check_output(['../ex1/generators/rand.exe', str_n], text=True)
         
-        qui = subprocess.run(['./quick'], input=data, capture_output=True, text=True)
+        qui = subprocess.run(['../ex1/quick.exe'], input=data, capture_output=True, text=True)
         lines = qui.stdout.strip().split('\n')
         sum_c["Quick"] += int(lines[-2])
         sum_s["Quick"] += int(lines[-1])
         
-        hyb = subprocess.run(['./hybrid', THRESHOLD], input=data, capture_output=True, text=True)
+        hyb = subprocess.run(['../ex1/hybrid.exe', THRESHOLD], input=data, capture_output=True, text=True)
         lines = hyb.stdout.strip().split('\n')
         sum_c["Hybrid"] += int(lines[-2])
         sum_s["Hybrid"] += int(lines[-1])

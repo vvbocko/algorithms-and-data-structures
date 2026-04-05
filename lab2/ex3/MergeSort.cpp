@@ -1,14 +1,3 @@
-// Zadanie 3. [30 p.]
-// Wykonaj eksperymenty analogiczne do zadań 1 i 2 dla wymyślonego przez siebie algorytmu sortowania, który:
-// 1. Używa metodologii D&C (dziel i zwyciężaj).
-// 2. Wykorzystuje procedurę Merge z MergeSorta.
-// 3. Do scalania będzie wykorzystywać aktualnie istniejące w danych wejściowych spójne podciągi rosnące. Taka idea jest użyta również w TimSorcie i PowerSorcie linki tutaj:
-//      a. https://en.wikipedia.org/wiki/Timsort
-//      b. https://youtu.be/exbuZQpWkQ0?feature=shared
-//      c. https://www.wild-inter.net/publications/munro-wild-2018.pdf
-// 4. Twoim głównym zadaniem jest wymyślenie i zaimplementowanie zasad scalania znalezionych podciągów, które będą maksymalizować efektywności stworzonego algorytmu.
-// 5. Porównaj na wykresie wyniki swojego algorytmu z klasycznym MergeSort'em.
-
 #include <iostream>
 #include <vector>
 
@@ -86,7 +75,7 @@ void MergeSort(std::vector<int>& v, std::vector<int>& temp, int left, int right)
     MergeSort(v, temp, mid + 1, right);
     
     Merge(v, temp, left, mid, right);
-    // if (v.size() < 40) printArray(v);
+    if (v.size() < 40) printArray(v);
 }
 
 
@@ -104,16 +93,16 @@ int main()
         original_v[i] = v[i];
     }
 
-    // if(n < 40) printArray(original_v);
+    if(n < 40) printArray(original_v);
     
     MergeSort(v, temp, 0, n - 1);
 
-    // if(n < 40)
-    // {
-    //     printArray(original_v);
-    //     std::cout << "0\n";
-    //     printArray(v);
-    // }
+    if(n < 40)
+    {
+        printArray(original_v);
+        std::cout << "0\n";
+        printArray(v);
+    }
 
     std::cout << compareCount << "\n";
     std::cout << swapCount << "\n";
@@ -127,6 +116,7 @@ int main()
             break;
         }
     }
-    if(!isSorted) {std::cerr << "\n";}
+    if(isSorted) {std::cerr << "Posortowano poprawnie\n";}
+    else {std::cerr << "Blad sortowania\n";}
     return 0;
 }

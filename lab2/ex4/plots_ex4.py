@@ -36,4 +36,4 @@ plt.legend()
 plt.grid(True)
 plt.tight_layout()
 
-plt.savefig('zad4_wykres.png')
+plt.savefig('plot_matrix.png')

@@ -1,9 +1,9 @@
 import subprocess
 import matplotlib.pyplot as plt
 
-K_REPEATS = 100
-THRESHOLD = "7"
-N_VALUES = list(range(10, 51, 10))  # [10, 20, 30, 40, 50]
+K_REPEATS = 1
+THRESHOLD = "8"
+N_VALUES = list(range(10, 51, 10))
 
 results = {
     "Insertion": {"c": [], "s": [], "c_n": [], "s_n": []},
@@ -11,7 +11,7 @@ results = {
     "Hybrid":    {"c": [], "s": [], "c_n": [], "s_n": []}
 }
 
-print(f"k={K_REPEATS}...")
+print(f"k={K_REPEATS}")
 
 for n in N_VALUES:
     str_n = str(n)
@@ -20,19 +20,19 @@ for n in N_VALUES:
     sum_s = {"Insertion": 0, "Quick": 0, "Hybrid": 0}
     
     for _ in range(K_REPEATS):
-        data = subprocess.check_output(['./gen_rand', str_n,], text=True)
+        data = subprocess.check_output(['../ex1/generators/rand.exe', str_n], text=True)
         
-        ins = subprocess.run(['./insert'], input=data, capture_output=True, text=True)
+        ins = subprocess.run(['../ex1/insert.exe'], input=data, capture_output=True, text=True)
         lines = ins.stdout.strip().split('\n')
         sum_c["Insertion"] += int(lines[-2])
         sum_s["Insertion"] += int(lines[-1])
         
-        qui = subprocess.run(['./quick'], input=data, capture_output=True, text=True)
+        qui = subprocess.run(['../ex1/quick.exe'], input=data, capture_output=True, text=True)
         lines = qui.stdout.strip().split('\n')
         sum_c["Quick"] += int(lines[-2])
         sum_s["Quick"] += int(lines[-1])
         
-        hyb = subprocess.run(['./hybrid', THRESHOLD], input=data, capture_output=True, text=True)
+        hyb = subprocess.run(['../ex1/hybrid.exe', THRESHOLD], input=data, capture_output=True, text=True)
         lines = hyb.stdout.strip().split('\n')
         sum_c["Hybrid"] += int(lines[-2])
         sum_s["Hybrid"] += int(lines[-1])

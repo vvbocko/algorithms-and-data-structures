@@ -1,7 +1,7 @@
 import subprocess
 import matplotlib.pyplot as plt
 
-K_REPEATS = 10 
+K_REPEATS = 10
 N_VALUES = list(range(1000, 50001, 2000))
 
 results = {
@@ -9,8 +9,8 @@ results = {
     "Natural": {"c": [], "s": [], "c_n": [], "s_n": []}
 }
 
-# ./gen_asc ./gen_desc ./gen_rand
-GENERATOR = './gen_asc' 
+# /asc /desc /rand
+GENERATOR = '../ex1/generators/rand.exe' 
 
 for n in N_VALUES:
     str_n = str(n)
@@ -22,17 +22,17 @@ for n in N_VALUES:
 
         data = subprocess.check_output([GENERATOR, str_n], text=True)
         
-        classic = subprocess.run(['./classic'], input=data, capture_output=True, text=True)
+        classic = subprocess.run(['./classic.exe'], input=data, capture_output=True, text=True)
         lines = classic.stdout.strip().split('\n')
         sum_c["Classic"] += int(lines[-2])
         sum_s["Classic"] += int(lines[-1])
         
-        natural = subprocess.run(['./natural'], input=data, capture_output=True, text=True)
+        natural = subprocess.run(['./natural.exe'], input=data, capture_output=True, text=True)
         lines = natural.stdout.strip().split('\n')
         sum_c["Natural"] += int(lines[-2])
         sum_s["Natural"] += int(lines[-1])
     
-        print(f"n={n:5d}")
+    print(f"n={n:5d}")
 
     for algo in results.keys():
         avg_c = sum_c[algo] / K_REPEATS
@@ -45,7 +45,10 @@ for n in N_VALUES:
 
 
 fig, axs = plt.subplots(2, 2, figsize=(12, 10))
-fig.suptitle(f'Zadanie 3: Classic Merge vs Natural Merge (Gen: {GENERATOR})', fontsize=16)
+
+gen_name = GENERATOR.split('/')[-1].replace('.exe', '')
+
+fig.suptitle(f'Zadanie 3: Classic Merge vs Natural Merge (Gen: {gen_name})', fontsize=16)
 
 
 axs[0, 0].plot(N_VALUES, results["Classic"]["c"], 'b.-', label='Classic Merge')
@@ -81,4 +84,5 @@ axs[1, 1].legend()
 axs[1, 1].grid(True)
 
 plt.tight_layout()
-plt.savefig(f'zad3_wykres_{GENERATOR[2:]}.png')
+
+plt.savefig(f'plot_{gen_name}.png')

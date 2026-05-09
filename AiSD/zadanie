@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+
+struct Node
+{
+    Node* left;
+    Node* right;
+    Node* parent;
+    int value;
+};
+
+Node* BST_Successor(Node* node)
+{
+    if(node->right != nullptr)
+    {
+        node = node->right;
+        while (node->left != nullptr)
+            node = node->left;
+
+        return node;
+    }
+    // if(node->parent == nullptr) 
+    //     return nullptr;
+    
+    // Node* p = node->parent;
+    // if(p->left == node)
+    // {
+    //     return p;
+    // }
+    while (node->parent != nullptr && node->parent->right == node)
+        node = node->parent;
+
+    return node->parent;
+}
+
+void Print_in_order(Node* root)
+{
+    Node* current = root;
+    if(root == nullptr) 
+        return;
+
+    while (current->left != nullptr)
+    {
+        current = current->left;
+    }
+    while (current != nullptr)
+    {
+        std::cout << current->value;
+        current = BST_Successor(current);
+    }  
+}
+
+
+
+
+
+
+
+int main()
+{
+
+}
+    

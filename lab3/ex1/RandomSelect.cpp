@@ -1,7 +1,9 @@
 #include <iostream>
+#include <string>
 #include <vector>
-#include <limits>
 #include <algorithm>
+#include <random>
+#include <chrono>
 
 int compareCount = 0;
 int swapCount = 0;
@@ -16,39 +18,16 @@ void printArray(const std::vector<int>& v)
     std::cout << "\n";
 }
 
-int InsertionSort(std::vector<int>& tab, int start, int end)
-{
-    for(int i = start+1; i <= end; i++)
-    {
-        int key = tab[i];
-        int j = i - 1;
-
-        while (j >= start) 
-        {
-            compareCount++;
-            if (tab[j] > key) 
-            {
-                swapCount++;
-                tab[j+1] = tab[j];
-                j--;
-            } 
-            else 
-            {
-                break;
-            }
-        }
-        tab[j+1] = key;
-    }
-
-    int mid = (start + end)/2;
-    int median = tab[mid];
-
-    return median;
-}
-
 
 int PARTITION(std::vector<int>& T, int start, int end)
 {
+    unsigned seed = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    static std::mt19937 gen(seed);
+    std::uniform_int_distribution<> randDistribution(start, end);
+
+    swapCount++;
+    std::swap(T[end], T[randDistribution(gen)]);
+
     int pivot = end;
     int i = start;
 
@@ -75,66 +54,32 @@ int PARTITION(std::vector<int>& T, int start, int end)
     return i;
 }
 
-int SELECT(std::vector<int>& T, int start, int end, int k)
+int RandomSelect(std::vector<int>& T, int start, int end, int k)
 {
-    if (start == end) 
-    {
-        return T[start];
-    }
-
-    std::vector<int> M;
-
-    for(int i = start; i <= end; i += 5)
-    {
-        int L = i;
-        int R = std::min(i+4,end);
-        
-        M.push_back(InsertionSort(T, L, R));
-    }
-
-    int p_value = 0;
-    if(M.size() <= 5)
-    {
-        p_value = InsertionSort(M, 0, M.size()-1);
-    }
-    else
-    {
-        p_value = SELECT(M, 0, M.size()-1, M.size()/2);
-    }
-
-    int i = start;
-    while(i <= end && T[i] != p_value)
-    {
-        i++;
-    }
-    
-    swapCount++;
-    std::swap(T[i], T[end]);
+    if(start == end) return T[start];
 
     int new_pivot = PARTITION(T, start, end);
 
-    if(new_pivot < k) 
+    if(new_pivot > k)
     {
-        return SELECT(T, new_pivot+1, end, k);
+        return RandomSelect(T, start, new_pivot-1, k);
     }
-    else if(new_pivot > k) 
+    else if(new_pivot < k)
     {
-        return SELECT(T, start, new_pivot-1, k);
+        return RandomSelect(T, new_pivot+1, end, k);
     }
 
-    return T[new_pivot];
+    return T[new_pivot];  
 }
 
-
-
-int main()
+int main() 
 {
     int n, k_input;
     std::cin >> n >> k_input;
 
+
     std::vector<int> T(n);
     std::vector<int> original_T(n);
-
 
     for(int i = 0; i < n; i++)
     {   
@@ -145,7 +90,7 @@ int main()
     int start = 0;
     int end = n-1;
     int k = k_input - 1;
-    int median_of_medians = SELECT(T, start, end, k);
+    int median_of_medians = RandomSelect(T, start, end, k);
 
     if(n <= 30)
     {
@@ -163,4 +108,4 @@ int main()
     std::cout << swapCount << "\n";
 
     return 0;
-}
+}   
